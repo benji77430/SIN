@@ -1,4 +1,4 @@
-
+VERSION = 1
 """
 AUTHOR : BENJI77
 LAUNCHED : 25 sept. 2024 at 15:48
@@ -51,8 +51,26 @@ elif system == "Linux":
     CLEAR = "clear"
 else:
     raise OSError(f"Unsupported operating system: {system}")
+def check_internet_connection(host="8.8.8.8", port=53, timeout=3):
+    try:
+        socket.setdefaulttimeout(timeout)
+        socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect((host, port))
+        return True
+    except socket.error as ex:
+        return False
 def update():
-
+    if not check_internet_connection():
+        print('no internet connection detected !')
+        return
+    verify = "https://raw.githubusercontent.com/benji77430/SIN/refs/heads/main/version.version"
+    response = requests.get(verify)
+    if response.status_code == 200:
+        content = response.content
+        version = float(content.decode())
+        if version > version:
+            print('SIN tools is already up to date !')
+            return
+        else: print(f'new update available : {version} !')
     url ="https://raw.githubusercontent.com/benji77430/SIN/refs/heads/main/sin.py"
     for _ in range(3):
         response = requests.get(url)
@@ -71,7 +89,7 @@ def update():
                 progress += 4
                 print(f'['+'-'*progress+'>'+' '*(10-progress)+f'] {progress*10}%',end='\r')
                 time.sleep(0.3)
-                print('update done !      ')
+                print(f'update to {version} done you should restart the script to get changes !')
                 break
         else:
             print(f'status code : {response.status_code}')

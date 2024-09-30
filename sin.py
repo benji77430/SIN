@@ -71,7 +71,7 @@ def update():
                 progress += 4
                 print(f'['+'-'*progress+'>'+' '*(10-progress)+f'] {progress*10}%',end='\r')
                 time.sleep(0.3)
-                print('update done !')
+                print('update done !      ')
                 break
         else:
             print(f'status code : {response.status_code}')

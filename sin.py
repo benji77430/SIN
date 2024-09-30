@@ -1,4 +1,4 @@
-VERSION = 1
+VERSION = 1.1
 """
 AUTHOR : BENJI77
 LAUNCHED : 25 sept. 2024 at 15:48
@@ -109,33 +109,20 @@ def get_bit(n):
         if nb >= n:
             print(f'2^{i} => {n}')
             return i
-            
-ascii = r"""
-    o__ __o       o     o          o  
-   /v     v\    _<|>_  <|\        <|> 
-  />       <\          / \\o      / \ 
- _\o____          o    \o/ v\     \o/ 
-      \_\__o__   <|>    |   <\     |  
-            \    / \   / \    \o  / \ 
-  \         /    \o/   \o/     v\ \o/ 
-   o       o      |     |       <\ |  
-   <\__ __/>     / \   / \        < \ 
-
-        [+] created by benji77                        
-                                      """
-while True:
-    try:
+        
+def binary_and_hex_conversion():
+    while True:
         clear()
-        print(Colors.RED+ascii+Colors.END)
+        print(Colors.RED+ASCII+Colors.END)
         choice = input(f'''
-        1) décimal to hexadecimal
-        2) hexadécimal to décimal
-        3) décimal to binairy
-        4) biniary to décimal
-        5) exit
-        6) update
+    1) decimal to hexadecimal
+    2) hexadecimal to decimal
+    3) decimal to binary
+    4) binary to decimals
+    q) main menu
 
 {Colors.CYAN}┌──<[{Colors.RED}{getpass.getuser()}@{socket.gethostname()}{Colors.CYAN}]{Colors.END} ~ {Colors.RED}{os.getcwd()}{Colors.END} \n{Colors.CYAN}└──╼ ${Colors.END}  ''')
+
         if choice == "1":
             try:
                 print('enter "q" to quit')
@@ -198,10 +185,37 @@ while True:
                     print(decimal_number)
             except ValueError:
                 pass
-        elif choice == "5":
+        elif choice == "q":
+            return
+ASCII = r"""
+    o__ __o       o     o          o  
+   /v     v\    _<|>_  <|\        <|> 
+  />       <\          / \\o      / \ 
+ _\o____          o    \o/ v\     \o/ 
+      \_\__o__   <|>    |   <\     |  
+            \    / \   / \    \o  / \ 
+  \         /    \o/   \o/     v\ \o/ 
+   o       o      |     |       <\ |  
+   <\__ __/>     / \   / \        < \ 
+
+        [+] created by benji77                        
+                                      """
+while True:
+    try:
+        clear()
+        print(Colors.RED+ASCII+Colors.END)
+        choice = input(f'''
+        1) binary and hexadecimal conversion
+        2) exit
+        3) update
+
+{Colors.CYAN}┌──<[{Colors.RED}{getpass.getuser()}@{socket.gethostname()}{Colors.CYAN}]{Colors.END} ~ {Colors.RED}{os.getcwd()}{Colors.END} \n{Colors.CYAN}└──╼ ${Colors.END}  ''')
+        if choice == "1":
+            binary_and_hex_conversion()
+        elif choice == "2":
             print('leaving..')
             exit()
-        elif choice =="6":
+        elif choice =="3":
             update()
             os.system(f'python {__file__}')
 

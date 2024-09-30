@@ -60,7 +60,7 @@ def update():
             with open(__file__,'w')as f:
                 f.write(content.decode())
                 print('update done !')
-                break
+                exit()
         else:
             print(f'status code : {response.status_code}')
 def clear():

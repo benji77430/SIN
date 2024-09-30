@@ -101,50 +101,72 @@ while True:
         2) hexadécimal to décimal
         3) décimal to binairy
         4) biniary to décimal
-
+        5) exit
         6) update
 
 {Colors.CYAN}┌──<[{Colors.RED}{getpass.getuser()}@{socket.gethostname()}{Colors.CYAN}]{Colors.END} ~ {Colors.RED}{os.getcwd()}{Colors.END} \n{Colors.CYAN}└──╼ ${Colors.END}  ''')
         if choice == "1":
-                
-            decimal_number = int(input("veuillez entrez un nombre > "))
-            hexadecimal = decimal_to_hexadecimal(decimal_number)
-            print(hexadecimal)
-        elif choice == "2":
-            table = {'0': 0, '1': 1, '2': 2, '3': 3,  
-                    '4': 4, '5': 5, '6': 6, '7': 7, 
-                    '8': 8, '9': 9, 'A': 10, 'B': 11,  
-                    'C': 12, 'D': 13, 'E': 14, 'F': 15} 
-            
-            hexadecimal = input("Enter Hexadecimal Number: ").strip().upper() 
-            res = 0
-            
-            # computing max power value 
-            size = len(hexadecimal) - 1
-            
-            for num in hexadecimal: 
-                res = res + table[num]*16**size 
-                size = size - 1
-            
-            print(res) 
-        elif choice == "3":
-            n = int(input('enter the number to translate > '))
-            bit = get_bit(n)
-            #traduction
-            bits = bin(n).split('b')[1]
-            #sécurité pour éviter d'avoir le 0b 
-            bits= str(bits).replace('b','0')
-            #rajouter des 0 a gauche si besoin 
-            if not len(bits) >= int(bit):
-                add = bit-len(bits)
-                bits = "0"*add + bits
-            #output
-            print(bits)
+            try:
+                print('enter "q" to quit')
 
-            
+                while True:
+                    decimal_number = int(input("veuillez entrez un nombre > "))
+                    hexadecimal = decimal_to_hexadecimal(decimal_number)
+                    print(hexadecimal)
+            except ValueError:
+                pass
+        elif choice == "2":
+            try:
+                print('enter "q" to quit')
+
+                while True:
+
+                    table = {'0': 0, '1': 1, '2': 2, '3': 3,  
+                            '4': 4, '5': 5, '6': 6, '7': 7, 
+                            '8': 8, '9': 9, 'A': 10, 'B': 11,  
+                            'C': 12, 'D': 13, 'E': 14, 'F': 15} 
+                    
+                    hexadecimal = input("Enter Hexadecimal Number: ").strip().upper() 
+                    res = 0
+                    
+                    # computing max power value 
+                    size = len(hexadecimal) - 1
+                    
+                    for num in hexadecimal: 
+                        res = res + table[num]*16**size 
+                        size = size - 1
+                    
+                    print(res) 
+            except KeyError:
+                pass
+        elif choice == "3":
+            try:
+                print('enter "q" to quit')
+
+                while True:
+                    n = int(input('enter the number to translate > '))
+                    bit = get_bit(n)
+                    #traduction
+                    bits = bin(n).split('b')[1]
+                    #sécurité pour éviter d'avoir le 0b 
+                    bits= str(bits).replace('b','0')
+                    #rajouter des 0 a gauche si besoin 
+                    if not len(bits) >= int(bit):
+                        add = bit-len(bits)
+                        bits = "0"*add + bits
+                    #output
+                    print(bits)
+
+            except ValueError:
+                pass
         elif choice == "4":
-            decimal_number = int(input("veuillez entrez un nombre > "),2)
-            print(decimal_number)
+            try:
+                print('enter "q" to quit')
+                while True:
+                    decimal_number = int(input("veuillez entrez un nombre > "),2)
+                    print(decimal_number)
+            except ValueError:
+                pass
         elif choice == "5":
             print('leaving..')
             exit()
@@ -152,6 +174,5 @@ while True:
             update()
             os.system(f'python {__file__}')
 
-        input('PRESS A KEY..')
     except KeyboardInterrupt:
         exit()

@@ -101,7 +101,7 @@ while True:
         2) hexadécimal to décimal
         3) décimal to binairy
         4) biniary to décimal
-        5) exit
+
         6) update
 
 {Colors.CYAN}┌──<[{Colors.RED}{getpass.getuser()}@{socket.gethostname()}{Colors.CYAN}]{Colors.END} ~ {Colors.RED}{os.getcwd()}{Colors.END} \n{Colors.CYAN}└──╼ ${Colors.END}  ''')

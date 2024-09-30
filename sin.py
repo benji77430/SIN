@@ -8,6 +8,7 @@ LAUNCHED : 25 sept. 2024 at 15:48
 try:
    import os
    import platform
+   import time
    import requests
    import socket
    import getpass
@@ -55,11 +56,23 @@ def update():
     url ="https://raw.githubusercontent.com/benji77430/SIN/refs/heads/main/sin.py"
     for _ in range(3):
         response = requests.get(url)
+        progress = 3
+        print(f'['+'-'*progress+'>'+' '*(10-progress)+f'] {progress*10}%',end='\r')
+        time.sleep(0.3)
+
         if response.status_code == 200:
             content = response.content
+            progress += 3
+            print(f'['+'-'*progress+'>'+' '*(10-progress)+f'] {progress*10}%',end='\r')
+            time.sleep(0.3)
+
             with open(__file__,'w')as f:
                 f.write(content.decode())
+                progress += 4
+                print(f'['+'-'*progress+'>'+' '*(10-progress)+f'] {progress*10}%',end='\r')
+                time.sleep(0.3)
                 print('update done !')
+                break
         else:
             print(f'status code : {response.status_code}')
 def clear():
@@ -78,8 +91,8 @@ def get_bit(n):
         if nb >= n:
             print(f'2^{i} => {n}')
             return i
-            break
-ascii = """
+            
+ascii = r"""
     o__ __o       o     o          o  
    /v     v\    _<|>_  <|\        <|> 
   />       <\          / \\o      / \ 

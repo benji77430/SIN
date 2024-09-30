@@ -1,6 +1,6 @@
 
 LINUX | MacOS COMMAND
-`curl -fsSL https://raw.githubusercontent.com/benji77430/SIN/refs/heads/main/setup.sh | sh`
+`curl -o setup.sh https://raw.githubusercontent.com/benji77430/SIN/refs/heads/main/setup.sh`
 
 Windows COMMAND
-`curl -fsSL https://raw.githubusercontent.com/benji77430/SIN/refs/heads/main/s | sh`
+`curl -o setup.bat https://raw.githubusercontent.com/benji77430/SIN/refs/heads/main/s`

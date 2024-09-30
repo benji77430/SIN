@@ -8,6 +8,7 @@ LAUNCHED : 25 sept. 2024 at 15:48
 try:
    import os
    import platform
+   import requests
    import socket
    import getpass
 except ImportError as e:
@@ -49,6 +50,19 @@ elif system == "Linux":
     CLEAR = "clear"
 else:
     raise OSError(f"Unsupported operating system: {system}")
+def update():
+
+    url ="https://raw.githubusercontent.com/benji77430/SIN/refs/heads/main/sin.py"
+    while True:
+        response = requests.get(url)
+        if response.status_code == 200:
+            content = response.content
+            with open(__file__,'w')as f:
+                f.write(content.decode())
+                print('update done !')
+                break
+        else:
+            print(f'status code : {response.status_code}')
 def clear():
     os.system(CLEAR)
 def decimal_to_hexadecimal(decimal):
@@ -89,8 +103,9 @@ while True:
         3) décimal to binairy
         4) biniary to décimal
         5) exit
+        6) update
 
-{Colors.CYAN}┌──<[{Colors.RED}{getpass.getuser()}@{socket.gethostname()}{Colors.CYAN}]{Colors.END} ~ {Colors.RED}{os.getcwd()}{Colors.END} \n{Colors.CYAN}└──╼ ${Colors.END}  ''') or '"
+{Colors.CYAN}┌──<[{Colors.RED}{getpass.getuser()}@{socket.gethostname()}{Colors.CYAN}]{Colors.END} ~ {Colors.RED}{os.getcwd()}{Colors.END} \n{Colors.CYAN}└──╼ ${Colors.END}  ''')
         if choice == "1":
                 
             decimal_number = int(input("veuillez entrez un nombre > "))
@@ -134,6 +149,8 @@ while True:
         elif choice == "5":
             print('leaving..')
             exit()
+        elif choice =="6":
+            update()
         input('PRESS A KEY..')
     except KeyboardInterrupt:
         exit()

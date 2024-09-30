@@ -53,15 +53,13 @@ else:
 def update():
 
     url ="https://raw.githubusercontent.com/benji77430/SIN/refs/heads/main/sin.py"
-    while True:
+    for _ in range(3):
         response = requests.get(url)
         if response.status_code == 200:
             content = response.content
             with open(__file__,'w')as f:
                 f.write(content.decode())
                 print('update done !')
-               os.system(f'python {__file__}')
-
         else:
             print(f'status code : {response.status_code}')
 def clear():
@@ -152,6 +150,8 @@ while True:
             exit()
         elif choice =="6":
             update()
+            os.system(f'python {__file__}')
+
         input('PRESS A KEY..')
     except KeyboardInterrupt:
         exit()

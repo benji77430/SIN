@@ -119,6 +119,8 @@ def binary_and_hex_conversion():
     2) hexadecimal to decimal
     3) decimal to binary
     4) binary to decimals
+    5) text to ASCII
+    6) ASCII to text 
     q) main menu
 
 {Colors.CYAN}┌──<[{Colors.RED}{getpass.getuser()}@{socket.gethostname()}{Colors.CYAN}]{Colors.END} ~ {Colors.RED}{os.getcwd()}{Colors.END} \n{Colors.CYAN}└──╼ ${Colors.END}  ''')
@@ -184,6 +186,26 @@ def binary_and_hex_conversion():
                     decimal_number = int(input("veuillez entrez un nombre > "),2)
                     print(decimal_number)
             except ValueError:
+                pass
+        elif choice == "5":
+            try:
+                while True:
+                        
+                    s = input('enter the text > ')
+                    if s == "q":
+                        break
+                    print(''.join(str(ord(c)) for c in s))
+            except ValueError or KeyError:
+                pass
+        elif choice == "6":
+            try:
+                while True:
+                        
+                    s = input('enter the ASCII > ')
+                    if s == "q":
+                        break
+                    print(''.join(str(chr(c)) for c in s))
+            except ValueError or KeyError:
                 pass
         elif choice == "q":
             return

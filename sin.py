@@ -4,7 +4,7 @@ AUTHOR : BENJI77
 LAUNCHED : 25 sept. 2024 at 15:48
 """
 
-
+"""1041011081081114432119111114108100"""
 try:
    import os
    import platform
@@ -194,22 +194,21 @@ def binary_and_hex_conversion():
                     s = input('enter the text > ')
                     if s == "q":
                         break
-                    print(''.join(str(ord(c)) for c in s))
+                    print(' '.join(str(ord(c)) for c in s))
             except ValueError or KeyError:
                 pass
         elif choice == "6":
             try:
                 while True:
-                        
                     s = input('enter the ASCII > ')
                     if s == "q":
                         break
-                    print(''.join(str(chr(c)) for c in s))
+                    print(''.join(chr(int(c)) for c in s.split(' ')))
             except ValueError or KeyError:
                 pass
         elif choice == "q":
             return
-ASCII = r"""
+ASCII = rf"""
     o__ __o       o     o          o  
    /v     v\    _<|>_  <|\        <|> 
   />       <\          / \\o      / \ 
@@ -220,7 +219,7 @@ ASCII = r"""
    o       o      |     |       <\ |  
    <\__ __/>     / \   / \        < \ 
 
-        [+] created by benji77                        
+        [+] created by benji77 {VERSION}                       
                                       """
 while True:
     try:

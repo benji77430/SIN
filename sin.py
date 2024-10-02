@@ -3,8 +3,6 @@ VERSION = 1.2
 AUTHOR : BENJI77
 LAUNCHED : 25 sept. 2024 at 15:48
 """
-
-"""1041011081081114432119111114108100"""
 try:
    import os
    import platform
@@ -109,7 +107,12 @@ def get_bit(n):
         if nb >= n:
             print(f'2^{i} => {n}')
             return i
-        
+def get_bits(n):
+
+    for i in range(0,1000):
+        nb = 2**i
+        if nb >= n:
+            return i
 def binary_and_hex_conversion():
     while True:
         clear()
@@ -194,7 +197,22 @@ def binary_and_hex_conversion():
                     s = input('enter the text > ')
                     if s == "q":
                         break
-                    print(' '.join(str(ord(c)) for c in s))
+                    decimal = ' '.join(str(ord(c)) for c in s)
+                    print("décimal :",decimal)
+                    print("hexadécimal :",' '.join(decimal_to_hexadecimal(int(i)) for i in decimal.split(' ')))
+                    def decimal_to_binairy(n):
+                        bit = get_bits(n)
+                        #traduction
+                        bits = bin(n).split('b')[1]
+                        #sécurité pour éviter d'avoir le 0b 
+                        bits= str(bits).replace('b','0')
+                        #rajouter des 0 a gauche si besoin 
+                        if not len(bits) >= int(bit):
+                            add = bit-len(bits)
+                            bits = "0"*add + bits
+                        return bits
+                    print("binaire :",' '.join(decimal_to_binairy(int(i)) for i in decimal.split(' ')))
+                
             except ValueError or KeyError:
                 pass
         elif choice == "6":

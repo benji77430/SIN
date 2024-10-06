@@ -108,6 +108,15 @@ def get_bit(n):
         if nb >= n:
             print(f'2^{i} => {n}')
             return i
+def bny(n):
+    n = int(n)
+    bit = get_bits(n)
+    bits = bin(n).split('b')[1]
+    bits= str(bits).replace('b','0')
+    if not len(bits) >= int(bit):
+        add = bit-len(bits)
+        bits = "0"*add + bits
+    return bits
 def get_bits(n):
 
     for i in range(0,1000):
@@ -277,19 +286,7 @@ def binary_and_hex_conversion():
                     if s == "q":
                         break
                     res = ' '.join(str(ord(c)) for c in s)
-                    print("\nresult : ",res)
-                    print("\nhexadecimal "," ".join(decimal_to_hexadecimal(int(i)) for i in res.split(' ') ) )
-                    def bny(n):
-                        n = int(n)
-                        bit = get_bits(n)
-                        bits = bin(n).split('b')[1]
-                        bits= str(bits).replace('b','0')
-                        if not len(bits) >= int(bit):
-                            add = bit-len(bits)
-                            bits = "0"*add + bits
-                        return bits
-                    biny = " ".join(str(bny(i)) for i in res.split(' '))
-                    print("\nbinairy : ",biny)
+                    
                     # Détailler le calcul pour binaire, hexadécimal et décimal
                     print("\nDétail des calculs pour chaque caractère:")
                     for char in s:
@@ -334,6 +331,10 @@ def binary_and_hex_conversion():
                         
                         steps.reverse()
                         for i, (dividend, quotient, remainder) in enumerate(steps):
+                            print(f"\nCaractère '{char}':")
+                            print(f"ASCII (décimal): {ascii_value}")
+                            print(f"Hexadécimal: {hex_value}")
+                            print(f"Binaire: {binary_value}\n")
                             print(f"  Étape {i+1}:")
                             print(f"    {dividend} ÷ 16 = {quotient} reste {remainder}")
                             print(f"    Chiffre hexadécimal ajouté: {remainder}")
@@ -342,10 +343,13 @@ def binary_and_hex_conversion():
                             print('')
 
                         
-                        print(f"\nCaractère '{char}':")
-                        print(f"ASCII (décimal): {ascii_value}")
-                        print(f"Hexadécimal: {hex_value}")
-                        print(f"Binaire: {binary_value}\n")
+                            
+                            
+                    print("\nresult : ",res)
+                    print("\nhexadecimal "," ".join(decimal_to_hexadecimal(int(i)) for i in res.split(' ') ) )
+                    
+                    biny = " ".join(str(bny(i)) for i in res.split(' '))
+                    print("\nbinairy : ",biny)
             except ValueError or KeyError:
                 pass
         elif choice == "6":

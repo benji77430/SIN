@@ -1,8 +1,23 @@
-VERSION = 1.3
+VERSION = 1.2
 """
 AUTHOR : BENJI77
 LAUNCHED : 25 sept. 2024 at 15:48
 """
+ASCII = rf"""
+    o__ __o       o     o          o  
+   /v     v\    _<|>_  <|\        <|> 
+  />       <\          / \\o      / \ 
+ _\o____          o    \o/ v\     \o/ 
+      \_\__o__   <|>    |   <\     |  
+            \    / \   / \    \o  / \ 
+  \         /    \o/   \o/     v\ \o/ 
+   o       o      |     |       <\ |  
+   <\__ __/>     / \   / \        < \ 
+
+        [+] created by benji77 {VERSION}                       
+                                      """
+
+
 try:
    import os
    import platform
@@ -40,12 +55,14 @@ class Colors:
     CROSSED = "\033[9m"
     END = "\033[0m"
 system = platform.system()
+os.system("cls" if system == "Windows" else "clear")
+print(Colors.GREEN+ASCII+Colors.END)
 print(system)
+
 if system == "Windows":
     CLEAR = "cls"
 elif system == "Darwin":
     CLEAR = "clear"
-
 elif system == "Linux":
     CLEAR = "clear"
 else:
@@ -103,7 +120,7 @@ def update():
                 progress += 10
                 print(f'['+'-'*progress+'>'+' '*(30-progress)+f'] {int(progress*10/3)}%',end='\r')
                 time.sleep(0.3)
-                print(f'update to {version} done you should restart the script to get changes !')
+                print('SIN was updated ! starting new version...')
                 return content.decode()
         else:
             print(f'status code : {response.status_code}')

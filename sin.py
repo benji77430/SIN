@@ -6,6 +6,7 @@ LAUNCHED : 25 sept. 2024 at 15:48
 try:
    import os
    import platform
+   import subprocess
    import time
    import requests
    import socket
@@ -57,6 +58,20 @@ def check_internet_connection(host="8.8.8.8", port=53, timeout=3):
     except socket.error as ex:
         return False
 
+def check_update():
+    if not check_internet_connection():
+        print('no internet connection detected !')
+        return
+    verify = "https://raw.githubusercontent.com/benji77430/SIN/refs/heads/main/version.version"
+    response = requests.get(verify)
+    if response.status_code == 200:
+        content = response.content
+        version = float(content.decode())
+        if version > VERSION:
+            print(f'new update available : {version} !')
+            return True
+        else: print(f'SIN tools is already up to date !')
+        return False
 def update():
     if not check_internet_connection():
         print('no internet connection detected !')
@@ -89,7 +104,7 @@ def update():
                 print(f'['+'-'*progress+'>'+' '*(30-progress)+f'] {int(progress*10/3)}%',end='\r')
                 time.sleep(0.3)
                 print(f'update to {version} done you should restart the script to get changes !')
-                break
+                return content.decode()
         else:
             print(f'status code : {response.status_code}')
 def clear():
@@ -108,15 +123,6 @@ def get_bit(n):
         if nb >= n:
             print(f'2^{i} => {n}')
             return i
-def bny(n):
-    n = int(n)
-    bit = get_bits(n)
-    bits = bin(n).split('b')[1]
-    bits= str(bits).replace('b','0')
-    if not len(bits) >= int(bit):
-        add = bit-len(bits)
-        bits = "0"*add + bits
-    return bits
 def get_bits(n):
 
     for i in range(0,1000):
@@ -286,7 +292,19 @@ def binary_and_hex_conversion():
                     if s == "q":
                         break
                     res = ' '.join(str(ord(c)) for c in s)
-                    
+                    print("\nresult : ",res)
+                    print("\nhexadecimal "," ".join(decimal_to_hexadecimal(int(i)) for i in res.split(' ') ) )
+                    def bny(n):
+                        n = int(n)
+                        bit = get_bits(n)
+                        bits = bin(n).split('b')[1]
+                        bits= str(bits).replace('b','0')
+                        if not len(bits) >= int(bit):
+                            add = bit-len(bits)
+                            bits = "0"*add + bits
+                        return bits
+                    biny = " ".join(str(bny(i)) for i in res.split(' '))
+                    print("\nbinairy : ",biny)
                     # Détailler le calcul pour binaire, hexadécimal et décimal
                     print("\nDétail des calculs pour chaque caractère:")
                     for char in s:
@@ -331,10 +349,6 @@ def binary_and_hex_conversion():
                         
                         steps.reverse()
                         for i, (dividend, quotient, remainder) in enumerate(steps):
-                            print(f"\nCaractère '{char}':")
-                            print(f"ASCII (décimal): {ascii_value}")
-                            print(f"Hexadécimal: {hex_value}")
-                            print(f"Binaire: {binary_value}\n")
                             print(f"  Étape {i+1}:")
                             print(f"    {dividend} ÷ 16 = {quotient} reste {remainder}")
                             print(f"    Chiffre hexadécimal ajouté: {remainder}")
@@ -343,13 +357,10 @@ def binary_and_hex_conversion():
                             print('')
 
                         
-                            
-                            
-                    print("\nresult : ",res)
-                    print("\nhexadecimal "," ".join(decimal_to_hexadecimal(int(i)) for i in res.split(' ') ) )
-                    
-                    biny = " ".join(str(bny(i)) for i in res.split(' '))
-                    print("\nbinairy : ",biny)
+                        print(f"\nCaractère '{char}':")
+                        print(f"ASCII (décimal): {ascii_value}")
+                        print(f"Hexadécimal: {hex_value}")
+                        print(f"Binaire: {binary_value}\n")
             except ValueError or KeyError:
                 pass
         elif choice == "6":
@@ -398,6 +409,11 @@ ASCII = rf"""
 
         [+] created by benji77 {VERSION}                       
                                       """
+
+is_update = check_update()
+if is_update:
+    exec(update())
+    os.system(f'python {__file__}')
 while True:
     try:
         clear()
@@ -405,17 +421,54 @@ while True:
         choice = input(f'''
         1) binary and hexadecimal conversion
         2) exit
-        3) update
+        3) {"start processing" if system != "Windows" else "processing can't be used with windows "}
 
 {Colors.CYAN}┌──<[{Colors.RED}{getpass.getuser()}@{socket.gethostname()}{Colors.CYAN}]{Colors.END} ~ {Colors.RED}{os.getcwd()}{Colors.END} \n{Colors.CYAN}└──╼ ${Colors.END}  ''')
         if choice == "1":
             binary_and_hex_conversion()
         elif choice == "2":
             print('leaving..')
-            exit()
-        elif choice =="3":
-            update()
-            os.system(f'python {__file__}')
+            exit()            
+        elif choice == "3":
+            if system != "Windows":
+                # Check if Processing is installed
+                try:
+                    subprocess.Popen("processing")
+                except subprocess.CalledProcessError:
+                    print("Processing is not installed. Attempting to install...")
+                    
+                    # Detect the Linux distribution
+                    if os.path.exists("/etc/os-release"):
+                        with open("/etc/os-release", "r") as f:
+                            distro_info = f.read()
+                        
+                        if "Ubuntu" in distro_info or "Debian" in distro_info:
+                            os.system("sudo add-apt-repository ppa:processing/ppa")
+                            os.system("sudo apt-get update")
+                            os.system("sudo apt-get install processing")
+                            input('press a key to continue...')
+
+                        elif "Fedora" in distro_info:
+                            os.system("sudo dnf install processing")
+                            input('press a key to continue...')
+
+                        elif "Arch" in distro_info:
+                            os.system("sudo pacman -S processing")
+                            input('press a key to continue...')
+
+                        else:
+                            print("Unsupported Linux distribution. Please install Processing manually.")
+                            input('press a key to continue...')
+                    else:
+                        print("Unable to detect Linux distribution. Please install Processing manually.")
+                        input('press a key to continue...')
+
+                
+                print("Installation complete. Please restart the script to use Processing.")
+            else:
+                print("Processing start is not supported on Windows.")
+                input('press a key to continue...')
+
 
     except KeyboardInterrupt:
         exit()

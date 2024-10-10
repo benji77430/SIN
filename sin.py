@@ -1,4 +1,4 @@
-VERSION = 1.3
+VERSION = 1.32
 """
 AUTHOR : BENJI77
 LAUNCHED : 25 sept. 2024 at 15:48
@@ -411,7 +411,7 @@ def binary_and_hex_conversion():
                         print(f"\nRésultat final : '{result}'")
             except ValueError or KeyError:
                 pass
-        elif choice == "-":
+        elif choice == "-" or choice == "q":
             return
 ASCII = rf"""
     o__ __o       o     o          o  
@@ -438,7 +438,8 @@ while True:
         choice = input(f'''
         1) binary and hexadecimal conversion
         2) exit
-        3) {"start processing" if system != "Windows" else "processing can't be used with windows "}
+        3) {"start processing" if system != "Windows" else "processing can't be started with windows by SIN"}
+        4) BENJI77430 github page
 
 {Colors.CYAN}┌──<[{Colors.RED}{getpass.getuser()}@{socket.gethostname()}{Colors.CYAN}]{Colors.END} ~ {Colors.RED}{os.getcwd()}{Colors.END} \n{Colors.CYAN}└──╼ ${Colors.END}  ''')
         if choice == "1":
@@ -448,44 +449,40 @@ while True:
             exit()            
         elif choice == "3":
             if system != "Windows":
-                # Check if Processing is installed
                 try:
                     subprocess.Popen("processing")
-                except subprocess.CalledProcessError:
-                    print("Processing is not installed. Attempting to install...")
-                    
-                    # Detect the Linux distribution
+                except FileNotFoundError:
+                    print("tentative d'installation de processing...")
                     if os.path.exists("/etc/os-release"):
                         with open("/etc/os-release", "r") as f:
                             distro_info = f.read()
-                        
                         if "Ubuntu" in distro_info or "Debian" in distro_info:
                             os.system("sudo add-apt-repository ppa:processing/ppa")
                             os.system("sudo apt-get update")
                             os.system("sudo apt-get install processing")
-                            input('press a key to continue...')
-
+                            subprocess.Popen("processing")
                         elif "Fedora" in distro_info:
                             os.system("sudo dnf install processing")
-                            input('press a key to continue...')
-
+                            subprocess.Popen("processing")
                         elif "Arch" in distro_info:
-                            os.system("sudo pacman -S processing")
-                            input('press a key to continue...')
-
+                            os.system("yay -S processing --noconfirm")
+                            subprocess.Popen("processing")      
                         else:
-                            print("Unsupported Linux distribution. Please install Processing manually.")
-                            input('press a key to continue...')
+                            print("distribution linux non prise en charge !")
+                            time.sleep(1)
                     else:
-                        print("Unable to detect Linux distribution. Please install Processing manually.")
-                        input('press a key to continue...')
-
-                
-                print("Installation complete. Please restart the script to use Processing.")
+                        print("détection de la distribution linux impossible !")
+                        time.sleep(1)                
+                print("installation terminée !")
             else:
-                print("Processing start is not supported on Windows.")
-                input('press a key to continue...')
-
-
+                print('installation non prise en charge sur windows !')
+                time.sleep(1)
+        elif choice == "4":
+            if system == "Windows":
+                os.system("start https://github.com/benji77430")
+            elif system == "Darwin":
+                os.system("open https://github.com/benji77430")
+            else: 
+                os.system("xdg-open https://github.com/benji77430")
     except KeyboardInterrupt:
         exit()

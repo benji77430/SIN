@@ -74,56 +74,6 @@ def check_internet_connection(host="8.8.8.8", port=53, timeout=3):
         return True
     except socket.error as ex:
         return False
-
-def check_update():
-    if not check_internet_connection():
-        print('no internet connection detected !')
-        return
-    verify = "https://raw.githubusercontent.com/benji77430/SIN/refs/heads/main/version.version"
-    response = requests.get(verify)
-    if response.status_code == 200:
-        content = response.content
-        version = float(content.decode())
-        if version > VERSION:
-            print(f'new update available : {version} !')
-            return True
-        else: print(f'SIN tools is already up to date !')
-        return False
-def update():
-    if not check_internet_connection():
-        print('no internet connection detected !')
-        return
-    verify = "https://raw.githubusercontent.com/benji77430/SIN/refs/heads/main/version.version"
-    response = requests.get(verify)
-    if response.status_code == 200:
-        content = response.content
-        version = float(content.decode())
-        if version > version:
-            print('SIN tools is already up to date !')
-            return
-        else: print(f'new update available : {version} !')
-    url ="https://raw.githubusercontent.com/benji77430/SIN/refs/heads/main/sin.py"
-    for _ in range(3):
-        response = requests.get(url)
-        progress = 10
-        print(f'['+'-'*progress+'>'+' '*(30-progress)+f'] {int(progress*10/3)}%',end='\r')
-        time.sleep(0.3)
-
-        if response.status_code == 200:
-            content = response.content
-            progress += 10
-            print(f'['+'-'*progress+'>'+' '*(30-progress)+f'] {int(progress*10/3)}%',end='\r')
-            time.sleep(0.3)
-
-            with open(__file__,'w')as f:
-                f.write(content.decode())
-                progress += 10
-                print(f'['+'-'*progress+'>'+' '*(30-progress)+f'] {int(progress*10/3)}%',end='\r')
-                time.sleep(0.3)
-                print('SIN was updated ! starting new version...')
-                return content.decode()
-        else:
-            print(f'status code : {response.status_code}')
 def clear():
     os.system(CLEAR)
 def decimal_to_hexadecimal(decimal):
@@ -427,10 +377,6 @@ ASCII = rf"""
         [+] created by benji77 {VERSION}                       
                                       """
 
-is_update = check_update()
-if is_update:
-    exec(update())
-    os.system(f'python {__file__}')
 while True:
     try:
         clear()
